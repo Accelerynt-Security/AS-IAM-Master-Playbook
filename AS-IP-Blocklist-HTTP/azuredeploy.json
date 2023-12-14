@@ -162,7 +162,7 @@
                                     "inputs": {
                                         "body": {
                                             "incidentArmId": "@{triggerBody()[0]?['IncidentID']}",
-                                            "message": "<p>Added the following IPs to the Named Locations list :<br>\n<br>\n@{variables('Added IPs')}</p>"
+                                            "message": "<p>Added the following IPs to the Named Locations list :<br>\n@{variables('Added IPs')}</p>"
                                         },
                                         "host": {
                                             "connection": {
