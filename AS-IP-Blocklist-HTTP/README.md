@@ -7,7 +7,7 @@ For any technical questions, please contact info@accelerynt.com
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAccelerynt-Security%2FAS-IAM-Master-Playbook%2Fblob%2Fmain%2FAS-IP-Blocklist-HTTP%2Fazuredeploy.json)
 [![Deploy to Azure Gov](https://aka.ms/deploytoazuregovbutton)](https://portal.azure.us/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAccelerynt-Security%2FAS-IAM-Master-Playbook%2Fblob%2Fmain%2FAS-IP-Blocklist-HTTP%2Fazuredeploy.json)       
 
-This playbook is intended to be run from a Microsoft Sentinel Incident. It will add the IP address from Microsoft Sentinel Incidents to a Microsoft Azure Conditional Access Named Locations list, indicating compromised IP addresses.
+This playbook is intended to be run from the AS-IAM-Master-Playbook. It will add the IP address from Microsoft Sentinel Incidents to a Microsoft Azure Conditional Access Named Locations list, indicating compromised IP addresses.
                                                                                                                                      
 ![NamedLocations_Demo](Images/NamedLocations_Demo.png)
  
