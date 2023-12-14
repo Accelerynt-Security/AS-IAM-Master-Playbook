@@ -1,13 +1,13 @@
-# AS-Revoke-Azure-AD-User-Session-From-Incident-HTTP
+# AS-Microsoft-Entra-ID-Revoke-User-Sessions-HTTP
 
 Author: Accelerynt
 
 For any technical questions, please contact info@accelerynt.com  
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAccelerynt-Security%2FAS-IAM-Master-Playbook%2Fblob%2Fmain%2FAS-Revoke-Azure-AD-User-Session-From-Incident-HTTP%2Fazuredeploy.json)
-[![Deploy to Azure Gov](https://aka.ms/deploytoazuregovbutton)](https://portal.azure.us/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAccelerynt-Security%2FAS-IAM-Master-Playbook%2Fblob%2Fmain%2FAS-Revoke-Azure-AD-User-Session-From-Incident-HTTP%2Fazuredeploy.json)       
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAccelerynt-Security%2FAS-IAM-Master-Playbook%2Fblob%2Fmain%2FAS-Microsoft-Entra-ID-Revoke-User-Sessions-HTTP%2Fazuredeploy.json)
+[![Deploy to Azure Gov](https://aka.ms/deploytoazuregovbutton)](https://portal.azure.us/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAccelerynt-Security%2FAS-IAM-Master-Playbook%2Fblob%2Fmain%2FAS-Microsoft-Entra-ID-Revoke-User-Sessions-HTTP%2Fazuredeploy.json)       
 
-This playbook is intended to be run from the AS-IAM-Master-Playbook. It will look up the Azure AD users associated with the incident account entities and revoke their sessions. A comment noting the affected users will be added to the Incident.
+This playbook is intended to be run from the AS-IAM-Master-Playbook. It will look up the Microsoft Entra ID users associated with the incident account entities and revoke their sessions. A comment noting the affected users will be added to the Incident.
                                                                                                                                      
 ![RevokeUserSession_Demo_1](Images/RevokeUserSession_Demo_1.png)
 
@@ -19,8 +19,8 @@ This playbook is intended to be run from the AS-IAM-Master-Playbook. It will loo
                                                                                                                                      
 The following items are required under the template settings during deployment: 
 
-* A Microsoft Azure Active Directory [app registration](https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook/tree/main/AS-Revoke-Azure-AD-User-Session-From-Incident-HTTP#create-an-app-registration) with admin consent granted for "**User.ReadWrite.All**" in the "**Microsoft Graph**" API
-* An [Azure key vault secret](https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook/tree/main/AS-Revoke-Azure-AD-User-Session-From-Incident-HTTP#create-an-azure-key-vault-secret) containing your app registration client secret
+* A Microsoft Entra ID [app registration](https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook/tree/main/AS-Microsoft-Entra-ID-Revoke-User-Sessions-HTTP#create-an-app-registration) with admin consent granted for "**User.ReadWrite.All**" in the "**Microsoft Graph**" API
+* An [Azure key vault secret](https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook/tree/main/AS-Microsoft-Entra-ID-Revoke-User-Sessions-HTTP#create-an-azure-key-vault-secret) containing your app registration client secret
 
 
 # 
@@ -28,13 +28,13 @@ The following items are required under the template settings during deployment:
 
 #### Create an App Registration
 
-Navigate to the Microsoft Azure Active Directory app registration page: https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade
+Navigate to the Microsoft Entra ID app registration page: https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade
 
 Click "**New registration**".
 
 ![RevokeUserSession_App_Registration_1](Images/RevokeUserSession_App_Registration_1.png)
 
-Enter "**AS-Revoke-Azure-AD-User-Session-From-Incident-HTTP**" for the name, all else can be left as is. Click "**Register**"
+Enter "**AS-Microsoft-Entra-ID-Revoke-User-Sessions-HTTP**" for the name, all else can be left as is. Click "**Register**"
 
 ![RevokeUserSession_App_Registration_2](Images/RevokeUserSession_App_Registration_2.png)
 
@@ -66,7 +66,7 @@ Enter a description and select the desired expiration date, then click "**Add**"
 
 ![RevokeUserSession_App_Registration_9](Images/RevokeUserSession_App_Registration_9.png)
 
-Copy the value of the secret that is generated, as this will be needed for [Create an Azure Key Vault Secret](https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook/tree/main/AS-Revoke-Azure-AD-User-Session-From-Incident-HTTP#create-an-azure-key-vault-secret).
+Copy the value of the secret that is generated, as this will be needed for [Create an Azure Key Vault Secret](https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook/tree/main/AS-Microsoft-Entra-ID-Revoke-User-Sessions-HTTP#create-an-azure-key-vault-secret).
 
 ![RevokeUserSession_App_Registration_10](Images/RevokeUserSession_App_Registration_10.png)
 
@@ -79,11 +79,11 @@ Navigate to an existing key vault or create a new one. From the key vault overvi
 
 ![RevokeUserSession_Key_Vault_1](Images/RevokeUserSession_Key_Vault_1.png)
 
-Choose a name for the secret, such as "**AS-Revoke-Azure-AD-User-Session-From-Incident--App-Registration-Client-Secret**", and enter the client secret copied in the [previous section](https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook/tree/main/AS-Revoke-Azure-AD-User-Session-From-Incident-HTTP#create-an-app-registration). All other settings can be left as is. Click "**Create**". 
+Choose a name for the secret, such as "**AS-Revoke-Azure-AD-User-Session-From-Incident--App-Registration-Client-Secret**", and enter the client secret copied in the [previous section](https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook/tree/main/AS-Microsoft-Entra-ID-Revoke-User-Sessions-HTTP#create-an-app-registration). All other settings can be left as is. Click "**Create**". 
 
 ![RevokeUserSession_Key_Vault_2](Images/RevokeUserSession_Key_Vault_2.png)
 
-Once your secret has been added to the vault, navigate to the "**Access policies**" menu option. Leave this page open, as you will need to return to it once the playbook has been deployed. See [Granting Access to Azure Key Vault](https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook/tree/main/AS-Revoke-Azure-AD-User-Session-From-Incident-HTTP#granting-access-to-azure-key-vault).
+Once your secret has been added to the vault, navigate to the "**Access policies**" menu option. Leave this page open, as you will need to return to it once the playbook has been deployed. See [Granting Access to Azure Key Vault](https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook/tree/main/AS-Microsoft-Entra-ID-Revoke-User-Sessions-HTTP#granting-access-to-azure-key-vault).
 
 ![RevokeUserSession_Key_Vault_3](Images/RevokeUserSession_Key_Vault_3.png)
 
@@ -95,10 +95,10 @@ To configure and deploy this playbook:
  
 Open your browser and ensure you are logged into your Microsoft Sentinel workspace. In a separate tab, open the link to our playbook on the Accelerynt Security GitHub repository:
 
-https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook/tree/main/AS-Revoke-Azure-AD-User-Session-From-Incident-HTTP
+https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook/tree/main/AS-Microsoft-Entra-ID-Revoke-User-Sessions-HTTP
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAccelerynt-Security%2FAS-IAM-Master-Playbook%2Fblob%2Fmain%2FAS-Revoke-Azure-AD-User-Session-From-Incident-HTTP%2Fazuredeploy.json)
-[![Deploy to Azure Gov](https://aka.ms/deploytoazuregovbutton)](https://portal.azure.us/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAccelerynt-Security%2FAS-IAM-Master-Playbook%2Fblob%2Fmain%2FAS-Revoke-Azure-AD-User-Session-From-Incident-HTTP%2Fazuredeploy.json)                                             
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAccelerynt-Security%2FAS-IAM-Master-Playbook%2Fblob%2Fmain%2FAS-Microsoft-Entra-ID-Revoke-User-Sessions-HTTP%2Fazuredeploy.json)
+[![Deploy to Azure Gov](https://aka.ms/deploytoazuregovbutton)](https://portal.azure.us/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAccelerynt-Security%2FAS-IAM-Master-Playbook%2Fblob%2Fmain%2FAS-Microsoft-Entra-ID-Revoke-User-Sessions-HTTP%2Fazuredeploy.json)                                             
 
 Click the "**Deploy to Azure**" button at the bottom and it will bring you to the custom deployment template.
 
@@ -108,13 +108,13 @@ In the **Project Details** section:
 
 In the **Instance Details** section:
 
-* **Playbook Name**: This can be left as "**AS-Revoke-Azure-AD-User-Session-From-Incident-HTTP**" or you may change it.
+* **Playbook Name**: This can be left as "**AS-Microsoft-Entra-ID-Revoke-User-Sessions-HTTP**" or you may change it.
 
-* **Client ID**: Enter the Application (client) ID of your app registration referenced in [Create an App Registration](https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook/tree/main/AS-Revoke-Azure-AD-User-Session-From-Incident-HTTP#create-an-app-registration).
+* **Client ID**: Enter the Application (client) ID of your app registration referenced in [Create an App Registration](https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook/tree/main/AS-Microsoft-Entra-ID-Revoke-User-Sessions-HTTP#create-an-app-registration).
 
-* **Key Vault Name**: Enter the name of the key vault referenced in [Create an Azure Key Vault Secret](https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook/tree/main/AS-Revoke-Azure-AD-User-Session-From-Incident-HTTP#create-an-azure-key-vault-secret).
+* **Key Vault Name**: Enter the name of the key vault referenced in [Create an Azure Key Vault Secret](https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook/tree/main/AS-Microsoft-Entra-ID-Revoke-User-Sessions-HTTP#create-an-azure-key-vault-secret).
 
-* **Key Vault Secret Name**: Enter the name of the key vault Secret created in [Create an Azure Key Vault Secret](https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook/tree/main/AS-Revoke-Azure-AD-User-Session-From-Incident-HTTP#create-an-azure-key-vault-secret).
+* **Key Vault Secret Name**: Enter the name of the key vault Secret created in [Create an Azure Key Vault Secret](https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook/tree/main/AS-Microsoft-Entra-ID-Revoke-User-Sessions-HTTP#create-an-azure-key-vault-secret).
 
 Towards the bottom, click on "**Review + create**". 
 
@@ -143,7 +143,7 @@ Select the "**Get**" checkbox under "**Secret permissions**", then click "**Next
 
 ![RevokeUserSession_Key_Vault_Access_2](Images/RevokeUserSession_Key_Vault_Access_2.png)
 
-Paste "**AS-Revoke-Azure-AD-User-Session-From-Incident-HTTP**" into the principal search box and click the option that appears. If the app registration also appears, select the option that does **not** match the Application (client) ID of your app registration. Click "**Next**" towards the bottom of the page.
+Paste "**AS-Microsoft-Entra-ID-Revoke-User-Sessions-HTTP**" into the principal search box and click the option that appears. If the app registration also appears, select the option that does **not** match the Application (client) ID of your app registration. Click "**Next**" towards the bottom of the page.
 
 ![RevokeUserSession_Key_Vault_Access_3](Images/RevokeUserSession_Key_Vault_Access_3.png)
 
@@ -167,7 +167,7 @@ Select the "**Microsoft Sentinel Contributor**" role, then click "**Next**".
 
 ![RevokeUserSession_Add_Contributor_Role_2](Images/RevokeUserSession_Add_Contributor_Role_2.png)
 
-Select the "**Managed identity**" option, then click "**Select Members**". Under the subscription the Logic App is located, set the value of "**Managed identity**" to "**Logic app**". Next, enter "**AS-Revoke-Azure-AD-User-Session-From-Incident-HTTP**", or the alternative playbook name used during deployment, in the field labeled "**Select**". Select the playbook, then click "**Select**".
+Select the "**Managed identity**" option, then click "**Select Members**". Under the subscription the Logic App is located, set the value of "**Managed identity**" to "**Logic app**". Next, enter "**AS-Microsoft-Entra-ID-Revoke-User-Sessions-HTTP**", or the alternative playbook name used during deployment, in the field labeled "**Select**". Select the playbook, then click "**Select**".
 
 ![RevokeUserSession_Add_Contributor_Role_3](Images/RevokeUserSession_Add_Contributor_Role_3.png)
 
