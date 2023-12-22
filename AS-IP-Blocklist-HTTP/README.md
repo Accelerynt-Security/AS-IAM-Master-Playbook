@@ -147,29 +147,9 @@ Once the resources have validated, click on "**Create**".
 
 ![NamedLocations_Deploy_2](Images/NamedLocations_Deploy_2.png)
 
-The resources should take around a minute to deploy. Once the deployment is complete, you can expand the "**Deployment details**" section to view them.
-Click the one corresponding to the Logic App.
+The resources should take around a minute to deploy. Once the deployment is complete, you can expand the "Deployment details" section to view them. To view the deployed Logic App, click the resource that corresponds to it.
 
 ![NamedLocations_Deploy_3](Images/NamedLocations_Deploy_3.png)
-
-Click on the “**Edit**” button. This will bring us into the Logic Apps Designer.
-
-![NamedLocations_Deploy_4](Images/NamedLocations_Deploy_4.png)
-
-The first, second, and sixth steps labeled "**Connections**" use connections created during the deployment of this playbook. Before the playbook can be run, these connections will either need to be authorized in the indicated steps, or existing authorized connections may be alternatively selected.  
-
-![NamedLocations_Deploy_5](Images/NamedLocations_Deploy_5.png)
-
-To validate the connections created for this playbook, expand the "**Connections**" step and click the exclamation point icon next to the name matching the playbook.
-                                                                                                
-![NamedLocations_Deploy_6](Images/NamedLocations_Deploy_6.png)
-
-When prompted, sign in to validate the connection.                                                                                                
-                                                                                                
-![NamedLocations_Deploy_7](Images/NamedLocations_Deploy_7.png)                                                                                                                                                                                                                                                   
-Once all connection steps have been updated, click the "**Save**" button.
-
-![NamedLocations_Deploy_8](Images/NamedLocations_Deploy_8.png)  
 
 
 #
