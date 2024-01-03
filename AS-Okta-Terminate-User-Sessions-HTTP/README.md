@@ -1,4 +1,4 @@
-# AS-Okta-Terminate-User-Sessions-HTTP-User-Sessions-HTTP
+# AS-Okta-Terminate-User-Sessions-HTTP
 Author: Accelerynt
 
 For any technical questions, please contact info@accelerynt.com  
@@ -16,7 +16,7 @@ This playbook is intended to be run from the AS-IAM-Master-Playbook. It will mat
 The following items are required under the template settings during deployment: 
 
 * An Okta Admin account and [API token](https://developer.okta.com/docs/guides/create-an-api-token/main/)
-* An [Azure Key Vault Secret](https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook/tree/main/AS-Okta-Terminate-User-Sessions-HTTP-User-Sessions-HTTP#create-an-azure-key-vault-secret) containing your Okta API Token 
+* An [Azure Key Vault Secret](https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook/tree/main/AS-Okta-Terminate-User-Sessions-HTTP#create-an-azure-key-vault-secret) containing your Okta API Token 
 
 
 # 
@@ -35,7 +35,7 @@ Choose a name for the secret, such as "**AS-Okta-Terminate-User-Sessions-HTTP-AP
 
 ![UserSessions_Key_Vault_2](Images/UserSessions_Key_Vault_2.png)
 
-Once your secret has been added to the vault, navigate to the "**Access policies**" menu option, also found under the "**Settings**" section on the Key Vault page menu. Leave this page open, as you will need to return to it once the playbook has been deployed. See [Granting Access to Azure Key Vault](https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook/tree/main/AS-Okta-Terminate-User-Sessions-HTTP-User-Sessions-HTTP#granting-access-to-azure-key-vault).
+Once your secret has been added to the vault, navigate to the "**Access policies**" menu option, also found under the "**Settings**" section on the Key Vault page menu. Leave this page open, as you will need to return to it once the playbook has been deployed. See [Granting Access to Azure Key Vault](https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook/tree/main/AS-Okta-Terminate-User-Sessions-HTTP#granting-access-to-azure-key-vault).
 
 ![UserSessions_Key_Vault_3](Images/UserSessions_Key_Vault_3.png)
 
@@ -64,9 +64,9 @@ In the **Instance Details** section:
 
 * **Okta Subdomain**: Enter the name of the subdomain (tenant) in the Okta Org URL. For example, with the URL https://example-admin.okta.com/, "**example-admin**" would be entered here.
 
-* **Key Vault Name**: Enter the name of the Key Vault referenced in [Create an Azure Key Vault Secret](https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook/tree/main/AS-Okta-Terminate-User-Sessions-HTTP-User-Sessions-HTTP#create-an-azure-key-vault-secret).
+* **Key Vault Name**: Enter the name of the Key Vault referenced in [Create an Azure Key Vault Secret](https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook/tree/main/AS-Okta-Terminate-User-Sessions-HTTP#create-an-azure-key-vault-secret).
 
-* **Secret Name**: Enter the name of the Key Vault Secret created in [Create an Azure Key Vault Secret](https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook/tree/main/AS-Okta-Terminate-User-Sessions-HTTP-User-Sessions-HTTP#create-an-azure-key-vault-secret).
+* **Secret Name**: Enter the name of the Key Vault Secret created in [Create an Azure Key Vault Secret](https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook/tree/main/AS-Okta-Terminate-User-Sessions-HTTP#create-an-azure-key-vault-secret).
 
 Towards the bottom, click on “**Review + create**”. 
 
@@ -118,7 +118,7 @@ Select the "**Microsoft Sentinel Contributor**" role, then click "**Next**".
 
 ![UserSessions_Add_Contributor_Role_2](Images/UserSessions_Add_Contributor_Role_2.png)
 
-Select the "**Managed identity**" option, then click "**Select Members**". Under the subscription the Logic App is located, set the value of "**Managed identity**" to "**Logic app**". Next, enter "**AS-Okta-Terminate-User-Sessions-HTTP-User-Sessions-HTTP**", or the alternative playbook name used during deployment, in the field labeled "**Select**". Select the playbook, then click "**Select**".
+Select the "**Managed identity**" option, then click "**Select Members**". Under the subscription the Logic App is located, set the value of "**Managed identity**" to "**Logic app**". Next, enter "**AS-Okta-Terminate-User-Sessions-HTTP**", or the alternative playbook name used during deployment, in the field labeled "**Select**". Select the playbook, then click "**Select**".
 
 ![UserSessions_Add_Contributor_Role_3](Images/UserSessions_Add_Contributor_Role_3.png)
 
