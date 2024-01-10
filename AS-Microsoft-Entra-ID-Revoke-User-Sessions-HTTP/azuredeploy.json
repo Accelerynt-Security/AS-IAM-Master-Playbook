@@ -176,7 +176,7 @@
                                 }
                             },
                             "runAfter": {
-                                "For_each_-Account": [
+                                "For_each_-_Account": [
                                     "Succeeded"
                                 ]
                             },
@@ -204,48 +204,66 @@
                             },
                             "type": "If"
                         },
-                        "For_each_-Account": {
+                        "For_each_-_Account": {
                             "foreach": "@triggerBody()",
                             "actions": {
-                                "Condition_-_User_session_successfully_revoked": {
+                                "Condition_-_Check_for_aadUserId": {
                                     "actions": {
-                                        "Append_to_string_variable_-_Affected_Microsoft_Entra_ID_Users": {
+                                        "Condition_-_User_session_successfully_revoked": {
+                                            "actions": {
+                                                "Append_to_string_variable_-_Affected_Microsoft_Entra_ID_Users": {
+                                                    "runAfter": {},
+                                                    "type": "AppendToStringVariable",
+                                                    "inputs": {
+                                                        "name": "Affected Microsoft Entra ID Users",
+                                                        "value": "@{items('For_each_-_Account')?['Name']} [@{items('For_each_-_Account')?['aadUserId']}]\n"
+                                                    }
+                                                }
+                                            },
+                                            "runAfter": {
+                                                "HTTP_-_Revoke_user_sign_in_sessions": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "expression": {
+                                                "and": [
+                                                    {
+                                                        "equals": [
+                                                            "@outputs('HTTP_-_Revoke_user_sign_in_sessions')['statusCode']",
+                                                            200
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            "type": "If"
+                                        },
+                                        "HTTP_-_Revoke_user_sign_in_sessions": {
                                             "runAfter": {},
-                                            "type": "AppendToStringVariable",
+                                            "type": "Http",
                                             "inputs": {
-                                                "name": "Affected Microsoft Entra ID Users",
-                                                "value": "@{items('For_each_-Account')?['Name']} [@{items('For_each_-Account')?['aadUserId']}]\n"
+                                                "headers": {
+                                                    "Authorization": "Bearer @{body('Parse_JSON_-_Access_token')?['access_token']}",
+                                                    "Host": "graph.microsoft.com"
+                                                },
+                                                "method": "POST",
+                                                "uri": "https://graph.microsoft.com/v1.0/users/@{items('For_each_-_Account')?['aadUserId']}/revokeSignInSessions"
                                             }
                                         }
-                                    },
-                                    "runAfter": {
-                                        "HTTP_-_Revoke_user_sign_in_sessions": [
-                                            "Succeeded"
-                                        ]
                                     },
                                     "expression": {
                                         "and": [
                                             {
-                                                "equals": [
-                                                    "@outputs('HTTP_-_Revoke_user_sign_in_sessions')['statusCode']",
-                                                    200
-                                                ]
+                                                "not": {
+                                                    "equals": [
+                                                        "@{items('For_each_-_Account')?['aadUserId']}",
+                                                        ""
+                                                    ]
+                                                }
                                             }
                                         ]
                                     },
-                                    "type": "If"
-                                },
-                                "HTTP_-_Revoke_user_sign_in_sessions": {
                                     "runAfter": {},
-                                    "type": "Http",
-                                    "inputs": {
-                                        "headers": {
-                                            "Authorization": "Bearer @{body('Parse_JSON_-_Access_token')?['access_token']}",
-                                            "Host": "graph.microsoft.com"
-                                        },
-                                        "method": "POST",
-                                        "uri": "https://graph.microsoft.com/v1.0/users/@{items('For_each_-Account')?['aadUserId']}/revokeSignInSessions"
-                                    }
+                                    "type": "If"
                                 }
                             },
                             "runAfter": {
