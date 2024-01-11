@@ -203,37 +203,70 @@
                         "For_each_-_Account": {
                             "foreach": "@triggerBody()",
                             "actions": {
-                                "Condition_-_Check_for_Results": {
+                                "Condition_-_Check_for_account_data": {
                                     "actions": {
-                                        "Condition_-_Users_Successfully_Terminated": {
+                                        "Condition_-_Check_for_Results": {
                                             "actions": {
-                                                "Append_to_string_variable": {
+                                                "Condition_-_Users_Successfully_Terminated": {
+                                                    "actions": {
+                                                        "Append_to_string_variable": {
+                                                            "runAfter": {},
+                                                            "type": "AppendToStringVariable",
+                                                            "inputs": {
+                                                                "name": "Affected Okta Users",
+                                                                "value": "@{items('For_each_-_Account')?['Name']} [@{body('HTTP_-_Get_Okta_User_Account')?[0]?['id']}]\n"
+                                                            }
+                                                        }
+                                                    },
+                                                    "runAfter": {
+                                                        "HTTP-_Terminate_User_Sessions": [
+                                                            "Succeeded"
+                                                        ]
+                                                    },
+                                                    "expression": {
+                                                        "and": [
+                                                            {
+                                                                "equals": [
+                                                                    "@outputs('HTTP-_Terminate_User_Sessions')['statusCode']",
+                                                                    204
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    "type": "If"
+                                                },
+                                                "HTTP-_Terminate_User_Sessions": {
                                                     "runAfter": {},
-                                                    "type": "AppendToStringVariable",
+                                                    "type": "Http",
                                                     "inputs": {
-                                                        "name": "Affected Okta Users",
-                                                        "value": "@{items('For_each_-_Account')?['Name']} [@{body('HTTP_-_Get_Okta_User_Account')?[0]?['id']}]\n"
+                                                        "headers": {
+                                                            "Accept": "application/json",
+                                                            "Authorization": "SSWS @{body('Get_Secret')?['value']}",
+                                                            "Content-Type": "application/json"
+                                                        },
+                                                        "method": "DELETE",
+                                                        "uri": "[concat('https://', parameters('OktaSubdomain') , '.okta.com/api/v1/users/@{body(''HTTP_-_Get_Okta_User_Account'')?[0]?[''id'']}/sessions')]"
                                                     }
                                                 }
                                             },
                                             "runAfter": {
-                                                "HTTP-_Terminate_User_Sessions": [
+                                                "HTTP_-_Get_Okta_User_Account": [
                                                     "Succeeded"
                                                 ]
                                             },
                                             "expression": {
                                                 "and": [
                                                     {
-                                                        "equals": [
-                                                            "@outputs('HTTP-_Terminate_User_Sessions')['statusCode']",
-                                                            204
+                                                        "greater": [
+                                                            "@length(body('HTTP_-_Get_Okta_User_Account'))",
+                                                            0
                                                         ]
                                                     }
                                                 ]
                                             },
                                             "type": "If"
                                         },
-                                        "HTTP-_Terminate_User_Sessions": {
+                                        "HTTP_-_Get_Okta_User_Account": {
                                             "runAfter": {},
                                             "type": "Http",
                                             "inputs": {
@@ -242,41 +275,34 @@
                                                     "Authorization": "SSWS @{body('Get_Secret')?['value']}",
                                                     "Content-Type": "application/json"
                                                 },
-                                                "method": "DELETE",
-                                                "uri": "[concat('https://', parameters('OktaSubdomain') , '.okta.com/api/v1/users/@{body(''HTTP_-_Get_Okta_User_Account'')?[0]?[''id'']}/sessions')]"
-                                            }
+                                                "method": "GET",
+                                                "uri": "[concat('https://', parameters('OktaSubdomain') , '.okta.com/api/v1/users?search=profile.email%20eq%20%22@{concat(replace(encodeUriComponent(items(''For_each_-_Account'')?[''accountName'']),''.'',''%2E''), ''%40'', replace(encodeUriComponent(items(''For_each_-_Account'')?[''upnSuffix'']),''.'',''%2E''))}%22')]"
+                                            },
+                                            "description": "Matching on Microsoft incident account email = Okta user account email"
                                         }
-                                    },
-                                    "runAfter": {
-                                        "HTTP_-_Get_Okta_User_Account": [
-                                            "Succeeded"
-                                        ]
                                     },
                                     "expression": {
                                         "and": [
                                             {
-                                                "greater": [
-                                                    "@length(body('HTTP_-_Get_Okta_User_Account'))",
-                                                    0
-                                                ]
+                                                "not": {
+                                                    "equals": [
+                                                        "@items('For_each_-_Account')['upnSuffix']",
+                                                        ""
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "not": {
+                                                    "equals": [
+                                                        "@items('For_each_-_Account')['accountName']",
+                                                        ""
+                                                    ]
+                                                }
                                             }
                                         ]
                                     },
-                                    "type": "If"
-                                },
-                                "HTTP_-_Get_Okta_User_Account": {
                                     "runAfter": {},
-                                    "type": "Http",
-                                    "inputs": {
-                                        "headers": {
-                                            "Accept": "application/json",
-                                            "Authorization": "SSWS @{body('Get_Secret')?['value']}",
-                                            "Content-Type": "application/json"
-                                        },
-                                        "method": "GET",
-                                        "uri": "[concat('https://', parameters('OktaSubdomain') , '.okta.com/api/v1/users?search=profile.email%20eq%20%22@{concat(replace(encodeUriComponent(items(''For_each_-_Account'')?[''accountName'']),''.'',''%2E''), ''%40'', replace(encodeUriComponent(items(''For_each_-_Account'')?[''upnSuffix'']),''.'',''%2E''))}%22')]"
-                                    },
-                                    "description": "Matching on Microsoft incident account email = Okta user account email"
+                                    "type": "If"
                                 }
                             },
                             "runAfter": {
