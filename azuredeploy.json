@@ -3,9 +3,9 @@
     "contentVersion": "1.0.0.0",
     "metadata": {
         "title": "AS-IAM-Master-Playbook", 
-        "description": "This playbook is intended to be run from a Microsoft Sentinel incident with account and/or IP entities. It will disable the Azure AD user account associated with the Microsoft Sentinel account entity.",
+        "description": "This playbook is intended to be run from a Microsoft Sentinel incident with account and/or IP entities. It will take the IP and account entities and run four separate playbooks to indicate compromise and revoke access to Okta and Microsoft Entra ID.",
         "prerequisites": "AS-IP-Blocklist-HTTP, AS-Microsoft-Entra-ID-Revoke-User-Sessions-HTTP, AS-Okta-NetworkZoneUpdate-HTTP, and AS-Okta-Terminate-User-Sessions-HTTP playbooks must first be deployed. Support for the set up and configuration of each of these items can be found here: https://github.com/Accelerynt-Security/AS-IAM-Master-Playbook",
-        "lastUpdateTime": "2023-11-10T12:03:07Z",
+        "lastUpdateTime": "2024-01-11T12:03:07Z",
         "entities": ["Account", "IP"], 
         "tags": ["Microsoft Sentinel", "Incident", "Microsoft Entra ID", "Okta"], 
         "support": {
